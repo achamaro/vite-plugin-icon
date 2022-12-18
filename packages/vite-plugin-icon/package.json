@@ -1,0 +1,42 @@
+{
+  "name": "vite-plugin-icon",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [
+    "vite-plugin"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./icon": {
+      "types": "./dist/icon.d.ts",
+      "import": "./dist/icon.mjs",
+      "require": "./dist/icon.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "unbuild --stub",
+    "build": "unbuild"
+  },
+  "author": "achamaro",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.11.16",
+    "iconify-icon": "^1.0.2",
+    "unbuild": "^1.0.2",
+    "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  }
+}

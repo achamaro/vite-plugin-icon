@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "."
+    },
+    {
+      "path": "./packages/vite-plugin-icon",
+      "name": "VITE-PLUGIN-ICON"
+    },
+    {
+      "path": "./packages/example-vue",
+      "name": "EXAMPLE-VUE"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "packages/": true
+    }
+  }
+}
