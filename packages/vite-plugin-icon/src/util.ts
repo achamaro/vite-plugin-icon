@@ -5,11 +5,12 @@ import { resolve } from "path";
 
 import { parseIconifyJSON } from "./storage";
 
-async function cacheFilename(prefix: string, icon: string): Promise<string> {
-  const dirname = resolve(
-    process.env.PWD!,
-    `node_modules/.vite-plugin-icon/${prefix}`
-  );
+async function cacheFilename(
+  cacheDir: string,
+  prefix: string,
+  icon: string
+): Promise<string> {
+  const dirname = `${cacheDir}/${prefix}`;
 
   if (!fs.existsSync(dirname)) {
     await fs.promises.mkdir(dirname, { recursive: true });
@@ -18,7 +19,10 @@ async function cacheFilename(prefix: string, icon: string): Promise<string> {
   return resolve(dirname, `${icon}.json`);
 }
 
-export async function load(name: string): Promise<IconifyIcon> {
+export async function load(
+  cacheDir: string,
+  name: string
+): Promise<IconifyIcon> {
   const [prefix, icon] = name.split(":");
   if (!prefix || !icon) {
     throw new Error(
@@ -26,7 +30,7 @@ export async function load(name: string): Promise<IconifyIcon> {
     );
   }
 
-  const filename = await cacheFilename(prefix, icon);
+  const filename = await cacheFilename(cacheDir, prefix, icon);
   if (fs.existsSync(filename)) {
     return JSON.parse(fs.readFileSync(filename, "utf-8"));
   }

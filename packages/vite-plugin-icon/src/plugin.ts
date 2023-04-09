@@ -2,16 +2,8 @@ import { createFilter, FilterPattern, PluginOption } from "vite";
 
 import { load } from "./util";
 
-// /**
-//  * @interface Options
-//  * @property {string} [tagName="i"] - アイコンに使用するタグ名を指定
-//  * @property {string} [customElementTagName="i-con"] - カスタム要素のタグ名を指定
-//  * @property {boolean} [define=true] - カスタム要素を定義するかどうかを指定
-//  * @property {FilterPattern} [includes="**\/*.{vue,html}"] - 変換対象のファイルを指定
-//  * @property {FilterPattern} [excludes] - 変換対象外のファイルを指定
-//  * @property {string | false | null} [resolve] ファイルの解決方法を指定
-//  */
 interface Options {
+  downloadDir?: string;
   tagName?: string;
   customElementTagName?: string;
   define?: boolean;
@@ -21,6 +13,7 @@ interface Options {
 }
 
 const defaultOptions = {
+  downloadDir: "src/assets/icons",
   tagName: "i",
   customElementTagName: "i-con",
   define: true,
@@ -28,11 +21,18 @@ const defaultOptions = {
 };
 
 export default function IconPlugin(options?: Options): PluginOption {
-  const { tagName, customElementTagName, define, includes, excludes, resolve } =
-    {
-      ...defaultOptions,
-      ...options,
-    };
+  const {
+    downloadDir,
+    tagName,
+    customElementTagName,
+    define,
+    includes,
+    excludes,
+    resolve,
+  } = {
+    ...defaultOptions,
+    ...options,
+  };
 
   const filter = createFilter(includes, excludes, { resolve });
 
@@ -115,6 +115,10 @@ export default function IconPlugin(options?: Options): PluginOption {
   return {
     name: "vite:icon",
     enforce: "pre",
+    configResolved(config) {
+      const vuePlugin = config.plugins.find((p) => p.name === "vite:vue");
+      console.log(vuePlugin);
+    },
     resolveId(id: string) {
       if (id.startsWith(virtualModuleId)) {
         return id;
@@ -126,7 +130,9 @@ export default function IconPlugin(options?: Options): PluginOption {
         return (
           `import { addIconifyIcon, defineIcon } from "${PACKAGE_NAME}/icon";` +
           (define ? `defineIcon("${customElementTagName}");` : "") +
-          `addIconifyIcon("${name}", ${JSON.stringify(await load(name))});`
+          `addIconifyIcon("${name}", ${JSON.stringify(
+            await load(downloadDir, name)
+          )});`
         );
       }
     },
