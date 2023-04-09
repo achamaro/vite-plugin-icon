@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import IconifyLink from './components/IconifyLink.vue';
+import HelloWorld from "./components/HelloWorld.vue";
+import IconifyLink from "./components/IconifyLink.vue";
 </script>
 
 <template>
   <div>
     <a href="https://vitejs.dev" target="_blank">
-      <i- name="logos:vitejs" class="logo" />
+      <i-con name="logos:vitejs" class="logo" />
     </a>
     <a href="https://vuejs.org/" target="_blank">
-      <i- name="logos:vue" class="logo vue" />
+      <i-con name="logos:vue" class="logo vue" />
     </a>
     <IconifyLink />
   </div>

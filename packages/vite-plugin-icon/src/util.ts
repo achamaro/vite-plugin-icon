@@ -1,20 +1,9 @@
 import fs from "fs";
 import type { IconifyIcon, IconifyJSON } from "iconify-icon";
-import { resolve } from "path";
 import fetch from "node-fetch";
-import pkg from "../package.json";
-import { parseIconifyJSON } from "./icons";
+import { resolve } from "path";
 
-export function iconNameTokenizer(tagName: string) {
-  const tagReg = new RegExp(`<${tagName}\\s[^<>]*>`, "gs");
-
-  return (code: string) =>
-    Array.from(code.matchAll(tagReg))
-      .map(([code]) => {
-        return code.match(/[^:]name=['"]([^'"]+?)['"]/s)?.[1];
-      })
-      .filter(Boolean);
-}
+import { parseIconifyJSON } from "./storage";
 
 async function cacheFilename(prefix: string, icon: string): Promise<string> {
   const dirname = resolve(
@@ -33,7 +22,7 @@ export async function load(name: string): Promise<IconifyIcon> {
   const [prefix, icon] = name.split(":");
   if (!prefix || !icon) {
     throw new Error(
-      `[${pkg.name}] Wrong icon name attribute value: '${name}'.`
+      `[${PACKAGE_NAME}] Wrong icon name attribute value: '${name}'.`
     );
   }
 
@@ -46,7 +35,7 @@ export async function load(name: string): Promise<IconifyIcon> {
   const data = await fetch(url).then((r) => {
     if (!r.ok) {
       throw new Error(
-        `[${pkg.name}] Failed to fetch '${url}' ${r.status} ${r.statusText}.`
+        `[${PACKAGE_NAME}] Failed to fetch '${url}' ${r.status} ${r.statusText}.`
       );
     }
 
@@ -55,7 +44,7 @@ export async function load(name: string): Promise<IconifyIcon> {
 
   const iconData = parseIconifyJSON(data as IconifyJSON)[icon];
   if (!iconData) {
-    throw new Error(`[${pkg.name}] '${name}' not found.`);
+    throw new Error(`[${PACKAGE_NAME}] '${name}' not found.`);
   }
 
   fs.writeFileSync(filename, JSON.stringify(iconData));

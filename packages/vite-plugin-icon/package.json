@@ -1,42 +1,51 @@
 {
-  "name": "vite-plugin-icon",
+  "name": "@achamaro/vite-plugin-icon",
   "version": "0.0.1",
-  "description": "",
+  "description": "Vite plugin for Iconify Icon",
   "keywords": [
     "vite-plugin"
   ],
   "type": "module",
+  "author": "achamaro",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achamaro/vite-plugin-icon.git",
+    "directory": "packages/vite-plugin-icon"
+  },
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./icon": {
       "types": "./dist/icon.d.ts",
-      "import": "./dist/icon.mjs",
+      "import": "./dist/icon.js",
       "require": "./dist/icon.cjs"
     }
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "dev": "unbuild --stub",
-    "build": "unbuild"
+    "dev": "tsup --watch",
+    "build": "tsup"
   },
-  "author": "achamaro",
-  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.11.16",
-    "iconify-icon": "^1.0.2",
-    "unbuild": "^1.0.2",
+    "iconify-icon": "^1.0.7",
+    "node-fetch": "^3.3.1",
+    "tsup": "^6.7.0"
+  },
+  "peerDependencies": {
     "vite": "^4.0.0"
   },
-  "dependencies": {
-    "node-fetch": "^3.3.0"
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
   }
 }
