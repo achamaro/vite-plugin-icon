@@ -1,6 +1,5 @@
 import fs from "fs";
 import type { IconifyIcon, IconifyJSON } from "iconify-icon";
-import fetch from "node-fetch";
 import { resolve } from "path";
 
 import { parseIconifyJSON } from "./storage";
