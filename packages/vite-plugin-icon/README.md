@@ -39,14 +39,15 @@ export default defineConfig({
 ### Template
 
 ```html
-<i name="simple-icons:iconify"></i> <i-con name="simple-icons:iconify"></i-con>
+<i icon="simple-icons:iconify"></i>
+<i-con icon="simple-icons:iconify"></i-con>
 ```
 
 `i` (options.tagName) will be transformed into `i-con` (options.customElementTagName).
 
 ```html
-<i-con name="simple-icons:iconify"></i-con>
-<i-con name="simple-icons:iconify"></i-con>
+<i-con icon="simple-icons:iconify"></i-con>
+<i-con icon="simple-icons:iconify"></i-con>
 ```
 
 ## Options
@@ -54,9 +55,16 @@ export default defineConfig({
 ### downloadDir
 
 - **Type**: `string`
-- **Default**: `resolve(process.env.PWD!, "src/assets/icons")`
+- **Default**: `"src/assets/icons"`
 
 The directory to download icons.
+
+### nameAttribute
+
+- **Type**: `string`
+- **Default**: `"icon"`
+
+The attribute to specify the icon name.
 
 ### tagName
 
