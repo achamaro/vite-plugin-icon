@@ -19,34 +19,42 @@ jobs:
           node-version: "18.15.0"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Package Version Check
-        uses: JS-DevTools/npm-publish@v1
-        id: version_check
+      - name: Check Package Version
+        id: cpv
+        uses: PostHog/check-package-version@v2
         with:
-          token: ${{ secrets.NODE_AUTH_TOKEN }}
-          package: packages/vite-plugin-icon/package.json
-          access: public
-          dry-run: true
-      - if: steps.version_check.outputs.type == 'none'
+          path: packages/vite-plugin-icon
+
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        id: bump_version
         run: |
-          echo "Update package patch version."
           npm version patch -w packages/vite-plugin-icon
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-          git add .
-          git commit -m "Update package patch version" -a
-          git pull
-          git push -f origin main
+
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5.0.0
+        with:
+          branch: "fix/bump-version-${{ github.run_number }}"
+          title: "Bump version"
+          body: |
+            ```
+            $ npm version patch -w packages/vite-plugin-icon
+            ${{ steps.bump_version.outputs.stdout }}
+            ```
+          delete-branch: true
+
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        run: |
+          echo "Please bump up the version."
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          exit 1
 
       - run: npm ci -w packages/vite-plugin-icon
       - run: npm run build -w packages/vite-plugin-icon
-
-      - name: Npm publish
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NODE_AUTH_TOKEN }}
-          package: packages/vite-plugin-icon/package.json
-          access: public
+      - run: npm publish -w packages/vite-plugin-icon
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: git tag
         uses: butlerlogic/action-autotag@stable

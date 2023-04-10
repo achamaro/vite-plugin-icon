@@ -5,6 +5,9 @@
   "keywords": [
     "vite-plugin"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "author": "achamaro",
   "license": "MIT",
