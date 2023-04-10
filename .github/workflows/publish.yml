@@ -38,6 +38,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v5.0.0
         with:
+          token: ${{ secrets.PAT }}
           branch: "fix/bump-version-${{ github.run_number }}"
           title: "Bump version"
           body: |
