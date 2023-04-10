@@ -1,12 +1,16 @@
 name: Publish Package to npmjs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 on:
-  push:
+  pull_request:
     branches:
       - main
-    tags:
-      - "!*"
+    types:
+      - closed
 jobs:
-  build:
+  publish:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,11 +18,48 @@ jobs:
         with:
           node-version: "18.15.0"
           registry-url: "https://registry.npmjs.org"
+
+      - name: Check Package Version
+        id: cpv
+        continue-on-error: true
+        uses: PostHog/check-package-version@v2
+        with:
+          path: packages/vite-plugin-icon
+
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        id: bump_version
+        run: |
+          echo 'stdout<<EOF' >> $GITHUB_OUTPUT
+          npm version patch -w packages/vite-plugin-icon >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5.0.0
+        with:
+          token: ${{ secrets.PAT }}
+          branch: "fix/bump-version-${{ github.run_number }}"
+          title: "Bump version"
+          body: |
+            ```
+            $ npm version patch -w packages/vite-plugin-icon
+            ${{ steps.bump_version.outputs.stdout }}
+            ```
+          commit-message: "Bump version"
+
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        run: |
+          echo "PR created for bump version."
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          exit 1
+
       - run: npm ci -w packages/vite-plugin-icon
       - run: npm run build -w packages/vite-plugin-icon
-      - run: npm publish --access public -w packages/vite-plugin-icon
+      - run: npm publish -w packages/vite-plugin-icon
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
       - name: git tag
         uses: butlerlogic/action-autotag@stable
         env:
