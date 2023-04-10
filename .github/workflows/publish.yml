@@ -29,6 +29,7 @@ jobs:
           dry-run: true
       - if: steps.version_check.outputs.type == 'none'
         run: |
+          echo "Version changed: ${{ steps.version_check.outputs.old-version }} => ${{ steps.version_check.outputs.version }}"
           echo "Update package patch version."
           npm version patch -w packages/vite-plugin-icon
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
