@@ -53,7 +53,7 @@ jobs:
 
       - run: npm ci -w packages/vite-plugin-icon
       - run: npm run build -w packages/vite-plugin-icon
-      - run: npm publish -w packages/vite-plugin-icon
+      - run: npm publish --access=public -w packages/vite-plugin-icon
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
