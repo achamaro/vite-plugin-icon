@@ -1,6 +1,6 @@
 <template>
   <a href="https://iconify.design/" target="_blank">
-    <i name="simple-icons:iconify" class="logo"></i>
+    <i icon="simple-icons:iconify" class="logo"></i>
   </a>
 </template>
 

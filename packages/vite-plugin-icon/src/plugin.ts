@@ -4,6 +4,7 @@ import { load } from "./util";
 
 interface Options {
   downloadDir?: string;
+  nameAttribute?: string;
   tagName?: string;
   customElementTagName?: string;
   define?: boolean;
@@ -14,6 +15,7 @@ interface Options {
 
 const defaultOptions = {
   downloadDir: "src/assets/icons",
+  nameAttribute: "icon",
   tagName: "i",
   customElementTagName: "i-con",
   define: true,
@@ -23,6 +25,7 @@ const defaultOptions = {
 export default function IconPlugin(options?: Options): PluginOption {
   const {
     downloadDir,
+    nameAttribute,
     tagName,
     customElementTagName,
     define,
@@ -49,6 +52,10 @@ export default function IconPlugin(options?: Options): PluginOption {
     ),
   };
   const tagNameReg = new RegExp(`^(<)${tagName}|${tagName}(>)$`, "g");
+  const nameAttributeReg = new RegExp(
+    `${nameAttribute}=['"]([^'"]+?)['"]`,
+    "s"
+  );
 
   // カスタム要素へのタグ名置換とアイコン名の取得
   const replace = (value: string, iconNames: string[], tagName: string) => {
@@ -60,7 +67,7 @@ export default function IconPlugin(options?: Options): PluginOption {
 
       // `name` 属性の値が取得できる場合はアイコン名に追加し、
       // カスタム要素のタグ名に置換する。
-      const name = substring.match(/name=['"]([^'"]+?)['"]/s)?.[1];
+      const name = substring.match(nameAttributeReg)?.[1];
       if (name) {
         iconNames.push(name);
 
@@ -129,7 +136,9 @@ export default function IconPlugin(options?: Options): PluginOption {
         const name = id.substring(virtualModuleId.length + 1);
         return (
           `import { addIconifyIcon, defineIcon } from "${PACKAGE_NAME}/icon";` +
-          (define ? `defineIcon("${customElementTagName}");` : "") +
+          (define
+            ? `defineIcon("${customElementTagName}", "${nameAttribute}");`
+            : "") +
           `addIconifyIcon("${name}", ${JSON.stringify(
             await load(downloadDir, name)
           )});`
