@@ -18,13 +18,16 @@ jobs:
         with:
           node-version: "18.15.0"
           registry-url: "https://registry.npmjs.org"
+
       - name: Package Version Check
+        uses: JS-DevTools/npm-publish@v1
         id: version_check
-        uses: EndBug/version-check@v2.1.1
         with:
           token: ${{ secrets.NODE_AUTH_TOKEN }}
-          file-name: packages/vite-plugin-icon/package.json
-      - if: steps.version_check.outputs.changed == 'false'
+          package: packages/vite-plugin-icon/package.json
+          access: public
+          dry-run: true
+      - if: steps.version_check.outputs.type == 'none'
         run: |
           echo "Update package patch version."
           npm version patch -w packages/vite-plugin-icon
@@ -34,11 +37,17 @@ jobs:
           git commit -m "Update package patch version" -a
           git pull
           git push origin main
+
       - run: npm ci -w packages/vite-plugin-icon
       - run: npm run build -w packages/vite-plugin-icon
-      - run: npm publish --access public -w packages/vite-plugin-icon
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+      - name: Npm publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NODE_AUTH_TOKEN }}
+          package: packages/vite-plugin-icon/package.json
+          access: public
+
       - name: git tag
         uses: butlerlogic/action-autotag@stable
         env:
