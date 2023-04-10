@@ -1,7 +1,7 @@
 <template>
-    <a href="https://iconify.design/" target="_blank">
-      <i- name="simple-icons:iconify" class="logo" />
-    </a>
+  <a href="https://iconify.design/" target="_blank">
+    <i name="simple-icons:iconify" class="logo"></i>
+  </a>
 </template>
 
 <style>

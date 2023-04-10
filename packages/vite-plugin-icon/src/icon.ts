@@ -1,6 +1,5 @@
-import { getIcon } from "./icons";
-
-export { addIconifyIcon } from "./icons";
+import { getIcon } from "./storage";
+export * from "./storage";
 
 export class Icon extends HTMLElement {
   public svg: SVGSVGElement;
@@ -25,7 +24,7 @@ export class Icon extends HTMLElement {
     this.renderIcon();
   }
 
-  private styleContent(width: number = 1, height: number = 1) {
+  private styleContent(width = 1, height = 1) {
     return `:host{display:inline-block;vertical-align:middle;width:${
       width / height
     }em;height:1em;}`;
@@ -57,6 +56,6 @@ export class Icon extends HTMLElement {
   }
 }
 
-export function define(name = "i-") {
+export function defineIcon(name = "i-con") {
   customElements.get(name) ?? customElements.define(name, Icon);
 }
