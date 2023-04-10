@@ -6,10 +6,10 @@ import IconifyLink from "./components/IconifyLink.vue";
 <template>
   <div>
     <a href="https://vitejs.dev" target="_blank">
-      <i-con name="logos:vitejs" class="logo" />
+      <i-con icon="logos:vitejs" class="logo" />
     </a>
     <a href="https://vuejs.org/" target="_blank">
-      <i-con name="logos:vue" class="logo vue" />
+      <i-con icon="logos:vue" class="logo vue" />
     </a>
     <IconifyLink />
   </div>

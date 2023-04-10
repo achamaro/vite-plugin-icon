@@ -1,9 +1,11 @@
 {
   "name": "@achamaro/vite-plugin-icon",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Vite plugin for Iconify Icon",
   "keywords": [
-    "vite-plugin"
+    "vite-plugin",
+    "iconify",
+    "icon"
   ],
   "publishConfig": {
     "access": "public"
