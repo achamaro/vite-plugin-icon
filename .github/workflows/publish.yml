@@ -46,7 +46,6 @@ jobs:
             ${{ steps.bump_version.outputs.stdout }}
             ```
           commit-message: "Bump version"
-          delete-branch: true
 
       - if: steps.cpv.outputs.is-new-version == 'false'
         run: |
