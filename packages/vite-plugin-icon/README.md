@@ -1,6 +1,6 @@
 # @achamaro/vite-plugin-icon
 
-![npm (scoped)](https://img.shields.io/npm/v/achamaro/vite-plugin-icon)
+![npm (scoped)](https://img.shields.io/npm/v/@achamaro/vite-plugin-icon)
 
 [Iconify]: https://iconify.design/
 
