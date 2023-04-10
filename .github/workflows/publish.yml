@@ -1,12 +1,16 @@
 name: Publish Package to npmjs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 on:
-  push:
+  pull_request:
     branches:
       - main
-    tags:
-      - "!*"
+    types:
+      - closed
 jobs:
-  build:
+  publish:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,6 +18,22 @@ jobs:
         with:
           node-version: "18.15.0"
           registry-url: "https://registry.npmjs.org"
+      - name: Package Version Check
+        id: version_check
+        uses: EndBug/version-check@v2.1.1
+        with:
+          token: ${{ secrets.NODE_AUTH_TOKEN }}
+          file-name: packages/vite-plugin-icon/package.json
+      - if: steps.version_check.outputs.changed == 'false'
+        run: |
+          echo "Update package patch version."
+          npm version patch -w packages/vite-plugin-icon
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add .
+          git commit -m "Update package patch version" -a
+          git pull
+          git push origin main
       - run: npm ci -w packages/vite-plugin-icon
       - run: npm run build -w packages/vite-plugin-icon
       - run: npm publish --access public -w packages/vite-plugin-icon

@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/achamaro/vite-plugin-icon.git",
+    "url": "https://github.com/achamaro/vite-plugin-icon.git",
     "directory": "packages/vite-plugin-icon"
   },
   "files": [
@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "iconify-icon": "^1.0.7",
-    "node-fetch": "^3.3.1",
     "tsup": "^6.7.0"
   },
   "peerDependencies": {
@@ -47,5 +46,8 @@
     "vite": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=18.15.0"
   }
 }
