@@ -19,37 +19,37 @@ jobs:
           node-version: "18.15.0"
           registry-url: "https://registry.npmjs.org"
 
-      # - name: Check Package Version
-      #   id: cpv
-      #   continue-on-error: true
-      #   uses: PostHog/check-package-version@v2
-      #   with:
-      #     path: packages/vite-plugin-icon
+      - name: Check Package Version
+        id: cpv
+        continue-on-error: true
+        uses: PostHog/check-package-version@v2
+        with:
+          path: packages/vite-plugin-icon
 
-      # - if: steps.cpv.outputs.is-new-version == 'false'
-      #   id: bump_version
-      #   run: |
-      #     npm version patch -w packages/vite-plugin-icon
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        id: bump_version
+        run: |
+          npm version patch -w packages/vite-plugin-icon
 
-      # - if: steps.cpv.outputs.is-new-version == 'false'
-      #   name: Create Pull Request
-      #   id: cpr
-      #   uses: peter-evans/create-pull-request@v5.0.0
-      #   with:
-      #     branch: "fix/bump-version-${{ github.run_number }}"
-      #     title: "Bump version"
-      #     body: |
-      #       ```
-      #       $ npm version patch -w packages/vite-plugin-icon
-      #       ${{ steps.bump_version.outputs.stdout }}
-      #       ```
-      #     delete-branch: true
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5.0.0
+        with:
+          branch: "fix/bump-version-${{ github.run_number }}"
+          title: "Bump version"
+          body: |
+            ```
+            $ npm version patch -w packages/vite-plugin-icon
+            ${{ steps.bump_version.outputs.stdout }}
+            ```
+          delete-branch: true
 
-      # - if: steps.cpv.outputs.is-new-version == 'false'
-      #   run: |
-      #     echo "Please bump up the version."
-      #     echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
-      #     exit 1
+      - if: steps.cpv.outputs.is-new-version == 'false'
+        run: |
+          echo "Please bump up the version."
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          exit 1
 
       - run: npm ci -w packages/vite-plugin-icon
       - run: npm run build -w packages/vite-plugin-icon
