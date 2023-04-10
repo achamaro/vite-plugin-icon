@@ -49,7 +49,7 @@ jobs:
 
       - if: steps.cpv.outputs.is-new-version == 'false'
         run: |
-          echo "Please bump up the version."
+          echo "PR created for bump version."
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
           exit 1
 
