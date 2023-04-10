@@ -29,7 +29,9 @@ jobs:
       - if: steps.cpv.outputs.is-new-version == 'false'
         id: bump_version
         run: |
-          npm version patch -w packages/vite-plugin-icon
+          echo 'stdout<<EOF' >> $GITHUB_OUTPUT
+          npm version patch -w packages/vite-plugin-icon >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - if: steps.cpv.outputs.is-new-version == 'false'
         name: Create Pull Request
@@ -43,6 +45,7 @@ jobs:
             $ npm version patch -w packages/vite-plugin-icon
             ${{ steps.bump_version.outputs.stdout }}
             ```
+          commit-message: "Bump version"
           delete-branch: true
 
       - if: steps.cpv.outputs.is-new-version == 'false'
