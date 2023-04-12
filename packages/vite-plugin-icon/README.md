@@ -23,6 +23,8 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
+    // When using Svelte, it needs to be added before the Svelte plugin
+    IconPlugin(),
     // When using Vue, you need to set the compilerOption. `i-con` is the default value for `options.customElementTagName`.
     vue({
       template: {
@@ -31,7 +33,6 @@ export default defineConfig({
         },
       },
     }),
-    IconPlugin(),
   ],
 });
 ```
@@ -48,6 +49,31 @@ export default defineConfig({
 ```html
 <i-con icon="simple-icons:iconify"></i-con>
 <i-con icon="simple-icons:iconify"></i-con>
+```
+
+### For React
+
+extend `JSX.IntrinsicElements`
+
+```ts
+declare namespace JSX {
+  interface IntrinsicElements {
+    "i-con": IconAttributes;
+  }
+}
+```
+
+Please use the customElementTagName(default: `i-con`). In this case, use `class` instead of `className`.
+
+```tsx
+function App() {
+  return (
+    <i-con
+      icon="simple-icons:iconify"
+      class="logo iconify"
+    ></i-con>
+  )
+}
 ```
 
 ## Options
@@ -83,7 +109,7 @@ The tag name of the custom element to register.
 ### includes
 
 - **Type**: `ReadonlyArray<string | RegExp> | string | RegExp | null`
-- **Default**: `"**/*.{vue,html}"`
+- **Default**: `"**/*.{vue,html,jsx,tsx,svelte}"`
 
 ### excludes
 

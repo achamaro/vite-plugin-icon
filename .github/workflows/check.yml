@@ -10,11 +10,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      # - uses: actions/checkout@v3
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: "18.15.0"
-      #     registry-url: "https://registry.npmjs.org"
-      # - run: npm ci -w packages/vite-plugin-icon
-      # - run: npm run build -w packages/vite-plugin-icon
-      - run: echo "Check"
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.15.0"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm ci -w packages/vite-plugin-icon
+      - run: npm run test -w packages/vite-plugin-icon

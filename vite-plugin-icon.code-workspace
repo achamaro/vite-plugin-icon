@@ -9,6 +9,12 @@
     },
     {
       "path": "./examples/vue"
+    },
+    {
+      "path": "./examples/react"
+    },
+    {
+      "path": "./examples/svelte"
     }
   ],
   "settings": {

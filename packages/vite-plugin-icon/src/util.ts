@@ -21,12 +21,11 @@ async function cacheFilename(
 export async function load(
   cacheDir: string,
   name: string
-): Promise<IconifyIcon> {
+): Promise<IconifyIcon | undefined> {
+  // TODO: 動的な値も扱える仕組みを考える
   const [prefix, icon] = name.split(":");
   if (!prefix || !icon) {
-    throw new Error(
-      `[${PACKAGE_NAME}] Wrong icon name attribute value: '${name}'.`
-    );
+    return;
   }
 
   const filename = await cacheFilename(cacheDir, prefix, icon);
