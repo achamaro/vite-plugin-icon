@@ -8,7 +8,7 @@ export default defineConfig({
   },
   splitting: false,
   clean: true,
-  sourcemap: true,
+  sourcemap: false,
   esbuildOptions(options) {
     options.define!.PACKAGE_NAME = JSON.stringify(process.env.npm_package_name);
   },
