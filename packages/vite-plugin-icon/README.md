@@ -50,6 +50,31 @@ export default defineConfig({
 <i-con icon="simple-icons:iconify"></i-con>
 ```
 
+### For React
+
+extend `JSX.IntrinsicElements`
+
+```ts
+declare namespace JSX {
+  interface IntrinsicElements {
+    "i-con": IconAttributes;
+  }
+}
+```
+
+Please use the customElementTagName(default: `i-con`). In this case, use `class` instead of `className`.
+
+```jsx
+function App() {
+  return (
+    <i-con
+      icon="simple-icons:iconify"
+      class="logo iconify"
+    ></i-con>
+  )
+}
+```
+
 ## Options
 
 ### downloadDir
@@ -83,7 +108,7 @@ The tag name of the custom element to register.
 ### includes
 
 - **Type**: `ReadonlyArray<string | RegExp> | string | RegExp | null`
-- **Default**: `"**/*.{vue,html}"`
+- **Default**: `"**/*.{vue,html,jsx,tsx,svelte}"`
 
 ### excludes
 

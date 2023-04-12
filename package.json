@@ -4,7 +4,8 @@
   "private": true,
   "workspaces": [
     "packages/vite-plugin-icon",
-    "examples/vue"
+    "examples/vue",
+    "examples/react"
   ],
   "devDependencies": {
     "@types/node": "^18.15.11",
