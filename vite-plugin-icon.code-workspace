@@ -12,6 +12,9 @@
     },
     {
       "path": "./examples/react"
+    },
+    {
+      "path": "./examples/svelte"
     }
   ],
   "settings": {

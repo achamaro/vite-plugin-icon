@@ -23,6 +23,8 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
+    // When using Svelte, it needs to be added before the Svelte plugin
+    IconPlugin(),
     // When using Vue, you need to set the compilerOption. `i-con` is the default value for `options.customElementTagName`.
     vue({
       template: {
@@ -31,7 +33,6 @@ export default defineConfig({
         },
       },
     }),
-    IconPlugin(),
   ],
 });
 ```
@@ -64,7 +65,7 @@ declare namespace JSX {
 
 Please use the customElementTagName(default: `i-con`). In this case, use `class` instead of `className`.
 
-```jsx
+```tsx
 function App() {
   return (
     <i-con
