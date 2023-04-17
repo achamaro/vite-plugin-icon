@@ -19,7 +19,8 @@
     "directory": "packages/vite-plugin-icon"
   },
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "exports": {
     ".": {
@@ -31,6 +32,9 @@
       "types": "./dist/icon.d.ts",
       "import": "./dist/icon.js",
       "require": "./dist/icon.cjs"
+    },
+    "./types/jsx": {
+      "types": "./types/jsx.d.ts"
     }
   },
   "main": "./dist/index.cjs",

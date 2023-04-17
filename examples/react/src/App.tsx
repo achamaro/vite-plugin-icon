@@ -17,10 +17,10 @@ function App() {
           <img src={reactLogo} className="logo spin react" alt="React logo" />
         </a>
         <a href="https://iconify.design/" target="_blank">
-          <i-con
+          <i
             icon="simple-icons:iconify"
-            class={`logo spin iconify ${spin ? "" : "pause"}`}
-          ></i-con>
+            className={`logo spin iconify ${spin ? "" : "pause"}`}
+          ></i>
         </a>
       </div>
       <h1>Vite + React</h1>

@@ -1,10 +1,6 @@
 import { getIcon } from "./storage";
 export * from "./storage";
 
-export type IconAttributes = {
-  icon: string;
-};
-
 export const declareElement = (nameAttribute = "icon") =>
   class Icon extends HTMLElement {
     public svg: SVGSVGElement;
@@ -30,7 +26,7 @@ export const declareElement = (nameAttribute = "icon") =>
     }
 
     public styleContent(width = 1, height = 1) {
-      return `:host{display:inline-flex;width:${width / height}em;height:1em;}`;
+      return `:host{display:inline-flex;aspect-ratio:${width}/${height};height:1em;}`;
     }
 
     // name属性が変更されたらアイコンを再描画する
