@@ -1,7 +1,2 @@
 /// <reference types="vite/client" />
-
-declare namespace JSX {
-  interface IntrinsicElements {
-    "i-con": IconAttributes;
-  }
-}
+/// <reference types="@achamaro/vite-plugin-icon/types/jsx" />

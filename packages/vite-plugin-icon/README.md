@@ -53,27 +53,10 @@ export default defineConfig({
 
 ### For React
 
-extend `JSX.IntrinsicElements`
+Please add a reference to the type definition file for the `icon` attribute for the `i` tag and `i-con` tag (default) to the `vite-env.d.ts`.
 
 ```ts
-declare namespace JSX {
-  interface IntrinsicElements {
-    "i-con": IconAttributes;
-  }
-}
-```
-
-Please use the customElementTagName(default: `i-con`). In this case, use `class` instead of `className`.
-
-```tsx
-function App() {
-  return (
-    <i-con
-      icon="simple-icons:iconify"
-      class="logo iconify"
-    ></i-con>
-  )
-}
+/// <reference types="@achamaro/vite-plugin-icon/types/jsx" />
 ```
 
 ## Options

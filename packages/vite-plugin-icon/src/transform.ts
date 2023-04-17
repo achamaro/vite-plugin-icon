@@ -9,7 +9,7 @@ export function generateTransform(
 
   return (code: string, id: string): string => {
     // カスタムエレメントのタグ名に置換する
-    code = replace(code);
+    code = replace(code, id);
 
     // アイコン名を取得する
     const icons = parse(code);
@@ -51,7 +51,7 @@ export function generateReplace(
 
   const matchIcon = generateMatchIcon(tagName, nameAttribute);
 
-  return (code: string) =>
+  return (code: string, id: string) =>
     code.replaceAll(tagReg, (substring) => {
       if (matchIcon(substring)) {
         // tagNameをcustomElementTagNameに置換する
@@ -59,6 +59,9 @@ export function generateReplace(
           tagNameReg,
           (_, start, end) => `${start ?? ""}${customElementTagName}${end ?? ""}`
         );
+
+        // カスタムエレメントに変換するのでJSXの `className` を `class` に置換する
+        substring = substring.replace(/className/, "class");
       }
 
       return substring;

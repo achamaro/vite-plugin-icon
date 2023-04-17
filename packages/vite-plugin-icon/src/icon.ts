@@ -1,10 +1,6 @@
 import { getIcon } from "./storage";
 export * from "./storage";
 
-export type IconAttributes = {
-  icon: string;
-};
-
 export const declareElement = (nameAttribute = "icon") =>
   class Icon extends HTMLElement {
     public svg: SVGSVGElement;
